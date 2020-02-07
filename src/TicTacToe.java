@@ -1,4 +1,4 @@
-import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -39,8 +39,9 @@ public class TicTacToe {
                 while (true) {
                     System.out.print("Enter the coordinates: ");
                     try {
-                        coordinateX = scanner.nextInt();
-                        coordinateY = scanner.nextInt();
+                        String[] userInput = scanner.nextLine().split("\\s+");
+                        coordinateX = Integer.parseInt(userInput[0]);
+                        coordinateY = Integer.parseInt(userInput[1]);
                         if (areCoordinatesValid(coordinateX, coordinateY, arrayOfElements, nextElement)) {
                             if (nextElement == 'X') {
                                 nextElement = 'O';
@@ -49,8 +50,8 @@ public class TicTacToe {
                             }
                             break;
                         }
-                    } catch (InputMismatchException e) {
-                        System.out.println("You should enter numbers!");
+                    } catch (ArrayIndexOutOfBoundsException | NoSuchElementException | NumberFormatException e) {
+                        System.out.println("Your input is not valid. Please enter two numbers from 1 to 3 separated with a space");
                     }
                 }
             }
@@ -60,12 +61,13 @@ public class TicTacToe {
 
     public static boolean areCoordinatesValid (int x, int y, char[] ch, char nextElement){
 
-        int indexOfChar = x - 1 + (3 - y) * 3;
-
-        if (indexOfChar < 0 || indexOfChar > 8 ){
-            System.out.println("Coordinates should be from 1 to 3!");
+        if (x <= 0 || y <= 0 || x > 3 || y > 3){
+            System.out.println("Your input is not valid. Coordinates should be from 1 to 3!");
             return false;
         }
+
+        int indexOfChar = x - 1 + (3 - y) * 3;
+
         if (ch[indexOfChar] == 'X' || ch[indexOfChar] == 'O'){
             System.out.println("This cell is occupied! Choose another one!");
             return false;
