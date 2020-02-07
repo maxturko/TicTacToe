@@ -1,4 +1,5 @@
 A simple TicTacToe game with command line input and interface.
+
 To play the game(instructions for Windows):
 
 0. Make sure you have jre installed.
